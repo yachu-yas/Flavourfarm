@@ -1,0 +1,78 @@
+{% extends "base/base.html" %}
+{% block title %}Shop All - Flavourfarm{% endblock title %}
+{% load static %} 
+{% block content %} 
+{% include "components/header.html" %}
+
+<!-- Shop Container -->
+<div class="shopContainer sectionPadding">
+
+  <!-- Left Filter Panel -->
+  <div class="shopContainerLeft">
+    <form method="get">
+      <div class="fillterByPriceBox box">
+        <div class="boxHead">
+          <h4>Filter By Price</h4>
+        </div>
+        <div class="flitterSlider">
+          <input type="range" name="price" min="0" max="1000" />
+        </div>
+      </div>
+
+      <div class="ProductCategoriesBox box">
+        <div class="boxHead">
+          <h4>Filter By Categories</h4>
+        </div>
+        <div class="categoriesChoiceList filterLists">
+          {% for category in categories %}
+          <div class="fillterList">
+            <input type="radio" name="category" value="{{ category.slug }}" id="cat_{{ category.id }}"
+              {% if request.GET.category == category.slug %}checked{% endif %}>
+            <label for="cat_{{ category.id }}">{{ category.name }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="fillterBtn">
+        <button type="submit">Apply Filter</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right Product Grid -->
+  <div class="shopContainerRight">
+
+    <!-- Search and Sort Bar -->
+    <form method="get" class="search-sort-form">
+      <input type="text" name="search" placeholder="Search products..." value="{{ request.GET.search }}">
+
+      <select name="sort">
+        <option value="">Sort By</option>
+        <option value="price_asc" {% if request.GET.sort == "price_asc" %}selected{% endif %}>Price Low to High</option>
+        <option value="price_desc" {% if request.GET.sort == "price_desc" %}selected{% endif %}>Price High to Low</option>
+        <option value="name_asc" {% if request.GET.sort == "name_asc" %}selected{% endif %}>Name A-Z</option>
+        <option value="name_desc" {% if request.GET.sort == "name_desc" %}selected{% endif %}>Name Z-A</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Product List -->
+    <div class="productGrid">
+      {% for product in products %}
+      <div class="productCard">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>Rs. {{ product.price }}</p>
+        <a href="{% url 'view_product' product.slug %}" class="btn">View</a>
+      </div>
+      {% empty %}
+      <p>No products found.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% include "components/footer.html" %}
+{% endblock content %}

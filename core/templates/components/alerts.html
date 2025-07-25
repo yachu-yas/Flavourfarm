@@ -1,0 +1,12 @@
+{% if messages %}
+  <div class="message-container">
+    {% for message in messages %}
+      {% if message.message != "Product not found." or request.resolver_match.url_name not in "user_login user_registration" %}
+        <div class="message {{ message.tags }}">
+          <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% block title %}Flavourfarm{% endblock title %}
+
+{% block content %}
+{% include "components/header.html" %}
+
+<!-- Category List -->
+{% include "products/categoryList.html" with all_category=all_category %}
+
+<!-- Today's Offers -->
+{% include "products/topOffersTodayMini.html" with today_offer_mini=today_offer_mini %}
+
+<!-- Top Selling Products -->
+{% include "products/topSellingProductsMini.html" with top_sellings_mini=top_sellings_mini %}
+
+{% include "components/footer.html" %}
+{% endblock content %}

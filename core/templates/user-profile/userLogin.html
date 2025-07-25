@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+{% include "components/header.html" %}
+
+<div class="loginContainer formContainer sectionPadding">
+    <div class="loginContainerForm ContainerForm">
+        <div class="loginContainerHeader ContainerFormHeader">
+            <h4>Login</h4>
+        </div>
+
+        <form method="post" class="loginForm inputForm">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <div class="userInputs">
+                <input type="email" name="user_email" placeholder="Phone/Email *" required>
+                <input type="password" name="user_password" placeholder="Password *" required>
+                {% include "components/alerts.html" %}
+            </div>
+
+            <div class="loginOptions inputFormOptions">
+                <label class="rememberme">
+                    <input type="checkbox" name="remember_me"> Remember Me
+                </label>
+                <div class="forgotPass">
+                    <a href="/user/forgot-password" class="forgot-password">Forgot Password?</a>
+                </div>
+            </div>
+
+            <div class="loginBtn formInputBtn">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
+        <div class="createAccountLink formExtraLinks">
+            <p>Don't have an account?</p>
+            <a href="/user-registration" class="btn-link">Create Account</a>
+        </div>
+    </div>
+</div>
+
+{% include "components/footer.html" %}
+{% endblock content %}

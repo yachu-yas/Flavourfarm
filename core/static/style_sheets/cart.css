@@ -1,0 +1,35 @@
+.cartContainer {
+  padding: 2rem;
+  background-color: #fff;
+}
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+.cartItem .itemInfo {
+  flex: 1;
+}
+.cartItem .itemActions {
+  display: flex;
+  gap: 1rem;
+}
+.cartTotal {
+  margin-top: 2rem;
+  font-weight: bold;
+  text-align: right;
+}
+.cartCheckoutBtn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background-color: var(--accentColor1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.cartCheckoutBtn:hover {
+  background-color: var(--accentColor2);
+}
