@@ -10,7 +10,11 @@
         {% for i in all_category  %}
         <div class="categorieLink">
             <a href="{% url "category" i.slug %}">
-                <img src="{{i.image}}" alt="">
+                <!--<img src="{{i.image}}" alt="">-->
+                <!--<h3 style="color: green;">{{ i.name }}</h3>-->
+                <h3>{{ i.name }}</h3>
+
+
             </a>
         </div>
         {% endfor %}

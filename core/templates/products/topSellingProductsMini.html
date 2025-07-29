@@ -23,9 +23,14 @@
             </div>
             <div class="productImg">
                 <a href="{% url 'view_product' i.slug %}">
-                    <img src="{{ i.images.first.image.url }}" alt="{{ i.name }}">
+                {% if i.images.first %}
+                <img src="{{ i.images.first.image.url }}" alt="{{ i.name }}">
+                {% else %}
+                <img src="{% static 'images/default-product.png' %}" alt="No image available">
+                {% endif %}
                 </a>
             </div>
+
             <div class="productLabel">
                 <h4>{{ i.name }}</h4>
             </div>

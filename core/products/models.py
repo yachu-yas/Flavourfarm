@@ -41,6 +41,7 @@ class Product(Base_Model):
     retail_price = models.FloatField(validators=[MinValueValidator(0.0)])
     selling_price = models.FloatField(validators=[MinValueValidator(0.0)])
     stock = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    image = models.ImageField(upload_to='product_images/', blank=True, null=True) 
     slug = models.SlugField(unique=True, null=True, blank=True)
     is_offer = models.BooleanField(default=False)  # New field for offer products
     is_top_selling = models.BooleanField(default=False)  # New field for top-selling products

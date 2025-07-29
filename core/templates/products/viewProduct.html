@@ -5,7 +5,8 @@
 {% include "components/header.html" %}
 
     <!-- Product  Below -->
-    {% for i in product  %}
+    {% with i=product %}
+
 
     <input type="hidden" value="{{i.u_id}}">
     <div class="productViewSection sectionPadding">
@@ -21,7 +22,12 @@
         <div class="productOverView">
           <div class="productImages">
               <div class="mainImage">
-                  <img src="{{i.images.first.image}}" alt="">
+                  <!--<img src="{{i.images.first.image}}" alt="">-->
+                  {% if i.image %}
+                    <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                  {% else %}
+                    <p>No image available</p>
+                  {% endif %}
               </div>
               
               <div class="moreImage imageNavigator">
@@ -32,7 +38,11 @@
                   <div class="moreImageList"> 
                     {% for i  in i.images.all    %}
                       <div class="image">
-                          <img src="{{i.image}}" alt="">
+                          {% if i.image %}
+                            <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                          {% else %}
+                            <p>No image available</p>
+                          {% endif %}
                       </div>  
                     {% endfor %}
                     
@@ -159,7 +169,7 @@
     
     </div>
 
-    {% endfor %}
+    {% endwith %}
   
       <!-- Product  Below -->
 
@@ -171,7 +181,7 @@
     let plusBtn = document.querySelector(".plus");
     let minusBtn = document.querySelector(".minus");
     let qty = document.querySelector(".productQtyNos input");
-    let pid = document.querySelector("#pid").value
+    let pid = document.querySelector(".pid").value
     let addBtn = document.querySelector("#addToCart")
     let buyBtn = document.querySelector("#buyNow")
 

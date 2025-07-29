@@ -22,7 +22,7 @@
             </div>
             <div class="productImg">
                 <a href="{% url 'view_product' i.slug %}">
-                    <img src="{{ i.images.first.image }}" alt="">
+                    <img src="{{ i.images.first.image.url }}" alt="{{ i.name }}">
                 </a>
             </div>
             <div class="productLabel">

@@ -41,6 +41,11 @@ input[type=number] {
   appearance: none;
 }
 
+.green-text {
+  color: green;
+}
+
+
 textarea:focus,
 input:focus {
   outline: none;
@@ -1560,7 +1565,7 @@ h2 {
 
 /* --- ADDED: Forgot Password Link --- */
 .loginOptions .forgot-password {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--accentColor2);
   text-decoration: underline;
   cursor: pointer;

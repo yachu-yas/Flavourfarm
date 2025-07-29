@@ -13,6 +13,20 @@
             </div>
             {% endfor %}
         </div>
+
+        <!--{% for i in all_category %}
+        <div class="categorieLink">
+        <a href="{% url 'view_category' i.slug %}">
+        {% if i.image %}
+            <img src="{{ i.image.url }}" alt="{{ i.name }}">
+        {% else %}
+            <img src="{% static 'images/default-category.png' %}" alt="No Image">
+        {% endif %}
+        </a>
+        </div>
+        {% endfor %}-->
+
+
         <div class="catVerScrollBtn verScrollBtn">
             <img src="/Media/icons/next.png" alt="">
         </div>
