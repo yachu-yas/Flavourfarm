@@ -1,64 +1,57 @@
 from django.shortcuts import render, redirect
-#from django.http import HttpResponse
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from products.models import *
 from user_profile.models import *
-from payments.models import *
+from payments.models import User_Payments
 import razorpay
-#from user_profile.views import user_cart
-
 # Create your views here.
 
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from django.contrib import messages
-from user_profile.models import User_Profile
-
 def user_registration(request):
-    if request.method == "POST":
-        user_input = request.POST
-        user_first_name = user_input.get("user_profile_name")
-        user_last_name = user_input.get("user_profile_last_name")
-        user_email = user_input.get("user_email")
-        user_password = user_input.get("user_set_password")
-        user_confirm_password = user_input.get("user_set_password_confirm")
-        existing_user = User.objects.filter(username=user_email)
-
-        if not user_first_name or not user_email or not user_password or not user_confirm_password:
-            messages.error(request, "Fields with * need to be filled")
-        elif existing_user.exists():
-            messages.error(request, "User with the same email already exists")
-        elif user_password != user_confirm_password:
-            messages.error(request, "Both passwords must match")
-        else:
-            try:
+    try:
+        if request.method == "POST":
+            user_input = request.POST
+            user_first_name = user_input.get("user_profile_name")
+            user_last_name = user_input.get("user_profile_last_name")
+            user_email = user_input.get("user_email")
+            user_password = user_input.get("user_set_password")
+            user_confirm_password = user_input.get("user_set_password_confirm")
+            existing_user = User.objects.filter(username = user_email)
+            if user_first_name == ""  or user_email == "" or user_password == "" or user_confirm_password == "":
+                messages.error(request,"Fields With * Needs To Be Filled")
+                return HttpResponseRedirect(request.path_info)
+            elif existing_user.exists():
+                messages.error(request,"User With Same Email Already Exists")
+                return HttpResponseRedirect(request.path_info)
+            elif user_password != user_confirm_password:
+                messages.error(request,"Both The Password hould Be Same")
+                return HttpResponseRedirect(request.path_info)
+            else:
                 new_user = User.objects.create(
-                    username=user_email,
-                    first_name=user_first_name,
-                    email=user_email
-                )
-                if user_last_name:
+                    username = user_email,
+                    first_name = user_first_name,
+                    email = user_email
+                    )
+                if user_last_name != "":
                     new_user.last_name = user_last_name
-                new_user.set_password(user_password)
+                new_user.set_password( user_password)
                 new_user.save()
-
-                User_Profile.objects.create(user=new_user)
-
-                new_user = authenticate(username=user_email, password=user_password)
+                new_user_profile = User_Profile.objects.create(
+                    user = new_user
+                )
+                new_user = authenticate(username = user_email,password =  user_password)
                 login(request, new_user)
                 return redirect("/")
-            except Exception as e:
-                messages.error(request, "An error occurred during registration.")
-                print("Registration error:", e)
-
-    return render(request, "user-profile/userReg.html")
-
+                
+        return render(request,"user-profile/userReg.html")
+    except Exception as e:
+        print(e)
+    pass
 
 def user_login(request):
     try:
@@ -69,29 +62,22 @@ def user_login(request):
                 user_input = request.POST
                 user_email = user_input.get("user_email")
                 user_password = user_input.get("user_password")
-                existing_user = User.objects.filter(username=user_email)
-                current_user = authenticate(username=user_email, password=user_password)
-
+                existing_user = User.objects.filter(username = user_email)
+                current_user = authenticate(username = user_email,password =  user_password)
                 if user_email == "" or user_password == "":
-                    messages.error(request, "Fields With * Needs To Be Filled")
-                    return HttpResponseRedirect(request.path_info)
+                    messages.error(request,"Fields With * Needs To Be Filled")
+                    return HttpResponseRedirect (request.path_info)
                 elif not existing_user.exists():
-                    messages.error(request, "You Don't Have An Account With Us, Kindly Register First")
-                    return HttpResponseRedirect(request.path_info)
+                    messages.error(request,"You Don't Have A Account With Us, Kindly Create Before Login")
+                    return HttpResponseRedirect (request.path_info)
                 elif not current_user:
-                    messages.error(request, "Incorrect Password")
-                    return HttpResponseRedirect(request.path_info)
+                    messages.error(request,"Incorrect Password")
                 else:
                     login(request, current_user)
                     return redirect("/")
-        
-        # ✅ THIS is what was missing!
-        return render(request, "user-profile/userLogin.html")
-        
+        return render(request,"user-profile/userLogin.html")
     except Exception as e:
         print(e)
-        return render(request, "user-profile/userLogin.html")  # fallback
-
 
 def user_logout(request):
     if request.user.is_authenticated:
@@ -213,4 +199,3 @@ def orders(request):
         return render(request, "user-profile/userLogin.html", )
 
     
-

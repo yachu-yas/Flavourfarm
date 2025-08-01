@@ -53,16 +53,15 @@
         </div>
 
         <div class="cart">
-            <a href="{% url 'user_cart' %}" class="cartLogo">
-                <img src="{% static 'images/icons/shopping-cart.png' %}" alt="">
-            </a>
-            
-            {% if request.user.is_authenticated and request.user.profile %}
-            <div class="cartNos">
-                <h6>{{ request.user.profile.cart_items_count }}</h6>
+            <div class="cart">
+                <a href="{% url 'user_cart' %}" class="cartLogo">
+                    <img src="{% static 'images/icons/shopping-cart.png' %}" alt="">
+                </a>
+                
+                <div class="cartNos">
+                    <h6>{{request.user.profile.cart_items_count}}</h6>
+                </div>
             </div>
-            {% endif %}
-
             <div class="cartQucikView">
                 <h1>Cart Here</h1>
             </div>

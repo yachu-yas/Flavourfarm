@@ -48,7 +48,6 @@ EXTERNAL_APPS = [
     "shop",
     "products",
     "payments",
-    "cart"
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
